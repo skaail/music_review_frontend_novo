@@ -4,6 +4,8 @@ import { Album } from "@/entities/album.entity"
 import { getAlbums } from "@/hooks/getAlbums"
 import { useEffect, useState } from "react"
 import AlbumCard from "./AlbumCard"
+import { getSocket } from "@/utils/socket"
+
 
 export default function AlbumGrid() {
     const [albums, setAlbums] = useState<Album[]>([])
@@ -15,7 +17,23 @@ export default function AlbumGrid() {
 
     useEffect(() => {
         getAlbumsApi()
+
+        const socket = getSocket();
+
+        // Listen for new albums
+        const handleNewAlbum = (album: Album) => {
+            setAlbums((prevAlbums) => [...prevAlbums, album]);
+        };
+
+        socket.on('newAlbum', handleNewAlbum);
+
+        // Clean up the effect
+        return () => {
+            socket.off('newAlbum', handleNewAlbum);
+        };
     }, [])
+
+    
 
     return (
         <div className="flex gap-5">
