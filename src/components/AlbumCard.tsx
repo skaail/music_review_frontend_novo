@@ -6,11 +6,9 @@ import { useState } from "react";
 export default function AlbumCard({...props}: Album) {
 
   const [hover, setHover] = useState(false)
-  const onMouseEnter = () => setHover(true)
-  const onMouseLeave = () => setHover(false)
 
   return (
-    <a href={props.link} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className="w-64 h-64 bg-slate-500 flex">
+    <a href={props.link} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} className="w-64 h-64 bg-slate-500 flex">
       {
         hover ? (
           <div className="relative cursor-pointer">

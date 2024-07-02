@@ -36,7 +36,7 @@ export default function AlbumGrid() {
     
 
     return (
-        <div className="flex gap-5">
+        <div className="flex gap-5 flex-wrap">
             {albums.map((album) => (
                 <AlbumCard key={album.id} id={0} nome={album.nome} capa={album.capa} link={album.link} banda={album.banda} nota={album.nota} />
             ))}
